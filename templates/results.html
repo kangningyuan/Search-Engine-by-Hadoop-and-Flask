@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        #main-header {
+            background-color: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77A5D8 3px solid;
+        }
+        #main-header h1 {
+            text-align: center;
+            text-transform: uppercase;
+            margin: 0;
+            font-size: 24px;
+        }
+        #main-content {
+            background: #fff;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        .result-item {
+            border-bottom: #ccc 1px solid;
+            padding: 10px 0;
+        }
+        .result-item h3 {
+            margin: 0;
+        }
+        .result-item a {
+            color: #333;
+            text-decoration: none;
+        }
+        .result-item a:hover {
+            text-decoration: underline;
+        }
+        .result-item p {
+            color: #555;
+        }
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        form input[type="text"] {
+            width: 60%;
+            padding: 10px;
+        }
+        form input[type="submit"] {
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        form input[type="submit"]:hover {
+            background: #555;
+        }
+        #back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #back-link a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        #back-link a:hover {
+            text-decoration: underline;
+        }
+        .snippet {
+            display: block;
+        }
+        .full-text {
+            display: none;
+        }
+    </style>
+    <script>
+        function toggleText(id) {
+            var snippet = document.getElementById("snippet-" + id);
+            var fullText = document.getElementById("fullText-" + id);
+            var button = document.getElementById("button-" + id);
+            if (fullText.style.display === "none") {
+                fullText.style.display = "block";
+                snippet.style.display = "none";
+                button.innerText = "Show less";
+            } else {
+                fullText.style.display = "none";
+                snippet.style.display = "block";
+                button.innerText = "Show more";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <h1>Technology Article Search Engine By Kangning</h1>
+        </div>
+    </header>
+    <div id="main-content" class="container">
+        <form action="/search" method="get">
+            <input type="text" name="q" placeholder="Enter search keyword...">
+            <input type="submit" value="Search">
+        </form>
+        <div id="back-link">
+            <a href="/">Back to Home</a>
+        </div>
+        {% for result in results %}
+        <div class="result-item">
+            <h3><a href="{{ result.url }}">{{ result.title }}</a></h3>
+            <p><strong>Author:</strong> {{ result.author }}</p>
+            <p id="snippet-{{ result.uuid }}" class="snippet"><strong>Snippet:</strong> {{ result.text[:200] }}</p>
+            <p id="fullText-{{ result.uuid }}" class="full-text"><strong>Full Text:</strong> {{ result.text }}</p>
+            <button id="button-{{ result.uuid }}" onclick="toggleText('{{ result.uuid }}')">Show more</button>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
