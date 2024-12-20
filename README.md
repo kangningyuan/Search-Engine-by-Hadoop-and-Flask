@@ -3,6 +3,8 @@
 ### 0. Introduction
 This project is a technology article search engine based on Hadoop and Flask framework. Using Hadoop MapReduce to build inverted index, Flask to create a user-friendly web search interface, and HDFS to store index and database.
 
+![](./RunningExample.png)
+
 #### 0.1 Directory Structure
 
 ```
